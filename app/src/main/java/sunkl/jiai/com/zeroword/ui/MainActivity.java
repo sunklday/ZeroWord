@@ -21,9 +21,12 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import sunkl.jiai.com.zeroword.R;
+import sunkl.jiai.com.zeroword.view.ItemFragment;
 import sunkl.jiai.com.zeroword.view.MyFragment;
+import sunkl.jiai.com.zeroword.view.StartFragment;
+import sunkl.jiai.com.zeroword.view.dummy.DummyContent;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements ItemFragment.OnListFragmentInteractionListener {
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -93,6 +96,11 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onListFragmentInteraction(DummyContent.DummyItem item) {
+        System.out.println("callback");
+    }
+
     /**
      * A placeholder fragment containing a simple view.
      */
@@ -142,7 +150,17 @@ public class MainActivity extends AppCompatActivity {
         public Fragment getItem(int position) {
             // getItem is called to instantiate the fragment for the given page.
             // Return a PlaceholderFragment (defined as a static inner class below).
-            return PlaceholderFragment.newInstance(position+1);
+
+                switch (position){
+                    case 0:
+                        return  ItemFragment.newInstance(position);
+                    case 1:
+                        return  StartFragment.newInstance(position);
+                    case 2:
+                        return  ItemFragment.newInstance(position+1);
+                }
+            return null;
+
         }
 
         @Override

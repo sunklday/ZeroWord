@@ -1,4 +1,4 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -6,11 +6,39 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".ui.MainActivity$PlaceholderFragment">
+    tools:context=".ui.MainActivity$PlaceholderFragment"
+    android:orientation="vertical">
 
     <TextView
         android:id="@+id/section_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
-</RelativeLayout>
+    <Button
+
+        android:text="管理数据"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="opeanManager"
+        />
+    <Button
+
+        android:text="显示数据"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="opeanShowData"
+        />
+    <Button
+
+        android:text="查看单词"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="opeanShowWord"
+        />
+    <Button
+        android:id="@+id/newasyncTask"
+        android:text="newasyncTask"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="newasyncTask"/>
+</LinearLayout>
