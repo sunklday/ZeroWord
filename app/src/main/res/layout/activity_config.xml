@@ -10,9 +10,9 @@
     tools:context="sunkl.jiai.com.zeroword.activity.ConfigActivity">
 
     <Button
-        android:id="@+id/btn_dbmanager"
+        android:id="@+id/btn_adddb"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="数据库"/>
+        android:text="添加数据库"/>
 
 </RelativeLayout>
