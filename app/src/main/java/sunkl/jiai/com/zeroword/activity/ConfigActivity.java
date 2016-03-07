@@ -1,5 +1,6 @@
 package sunkl.jiai.com.zeroword.activity;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -15,43 +16,56 @@ import sunkl.jiai.com.zeroword.R;
 import sunkl.jiai.com.zeroword.db.DBManager;
 
 public class ConfigActivity extends AppCompatActivity {
-    private Button button;
+    private Button btnTianJia;
+    private Button btnShezhi;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_config);
-        button  = (Button) findViewById(R.id.btn_adddb);
-        button.setOnClickListener(new View.OnClickListener() {
+
+        btnTianJia = (Button) findViewById(R.id.btn_adddb);
+        btnShezhi = (Button) findViewById(R.id.btn_shezhi);
+
+        btnTianJia.setVisibility(View.INVISIBLE);
+        btnTianJia.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 InputStream inputStream = getResources().openRawResource(R.raw.sijiword3);
                 BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
-                DBManager dbManager =new DBManager(ConfigActivity.this);
-                String line ;
-                int i=0;
+                DBManager dbManager = new DBManager(ConfigActivity.this);
+                String line;
+                int i = 0;
                 try {
-                    while(i<500) {
+                    while (i < 500) {
                         i++;
-                        line=bufferedReader.readLine();
-                        String[] str = line.split("\\*",3);
-                        if(str.length<2)
-                        {
+                        line = bufferedReader.readLine();
+                        String[] str = line.split("\\*", 3);
+                        if (str.length < 2) {
                             continue;
                         }
-                        dbManager.insert(str[0],str[1],str[2],0);
-                        for(int j=0;j<str.length;j++){
-                            System.out.println(str[j]+" " +j);
+                        dbManager.insert(str[0], str[1], str[2], 0);
+                        for (int j = 0; j < str.length; j++) {
+                            System.out.println(str[j] + " " + j);
                         }
                     }
-                    if(i>498) {
+                    if (i > 498) {
                         Toast.makeText(getApplicationContext(), "添加成功",
                                 Toast.LENGTH_SHORT).show();
                     }
-                } catch (IOException e){
+                } catch (IOException e) {
 
                 }
 
             }
         });
+
+        btnShezhi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ConfigActivity.this,ConfigUserActivity.class);
+                startActivity(intent);
+            }
+        });
+
     }
 }

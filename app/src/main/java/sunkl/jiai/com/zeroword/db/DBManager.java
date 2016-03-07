@@ -168,6 +168,13 @@ public class DBManager extends SQLiteOpenHelper {
         return cursor;
     }
 
+    public Cursor selectword(int id){
+        SQLiteDatabase db = this.getReadableDatabase();
+        String[] selectionArgs = {String.valueOf(id)};
+        Cursor cursor = db.query(WORDTABLE.TABLE_NAME,null,"_id=?",selectionArgs,null,null," _id desc");
+        return cursor;
+    }
+
     public void delete(int id) {
         SQLiteDatabase db = this.getWritableDatabase();
         String where = WORDTABLE._ID + "=?";
@@ -223,5 +230,11 @@ public class DBManager extends SQLiteOpenHelper {
 
         return cursor;
     }
-
+    public void userAmountUpdate(String number){
+        String[] whereArgs = {"sun"};
+        ContentValues cv = new ContentValues();
+        cv.put("amount",number);
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.update(USERTABLE.TABLE_NAME,cv,"name=?",whereArgs);
+    }
 }
