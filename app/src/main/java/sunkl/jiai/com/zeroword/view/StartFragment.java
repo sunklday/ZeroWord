@@ -1,5 +1,6 @@
 package sunkl.jiai.com.zeroword.view;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 import java.util.Random;
 
 import sunkl.jiai.com.zeroword.R;
+import sunkl.jiai.com.zeroword.activity.ShowWordActivity;
 import sunkl.jiai.com.zeroword.db.DBManager;
 
 /**
@@ -45,31 +47,35 @@ public class StartFragment extends Fragment {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DBManager dbManager = new DBManager(getContext());
-                Cursor userCursor = dbManager.userSelect();
-                int i = 0;
-                while (userCursor.moveToNext()) {
-                     i = Integer.parseInt(userCursor.getString(userCursor.getColumnIndex("amount")));
-                }
-                while (i>0) {
-                    System.out.print("输出单词："+i+"--");
-                    double d  = Math.random();
-                    int wordnumber = (int)(d*400);
-                    System.out.print(wordnumber+"--");
-                    Cursor cursor = dbManager.selectword(wordnumber);
-
-                    while (cursor.moveToNext()) {
-                        System.out.println(cursor.getString(cursor.getColumnIndex("word")));
-                        if (!cursor.getString(cursor.getColumnIndex("degree")).equals("0")){
-                            continue;
-                        }
-                    }
-
-                    i--;
-                }
+                Intent intent = new Intent(getContext(),ShowWordActivity.class);
+                startActivity(intent);
             }
         });
 
         return rootView;
+    }
+    private void setData(){
+        DBManager dbManager = new DBManager(getContext());
+        Cursor userCursor = dbManager.userSelect();
+        int i = 0;
+        while (userCursor.moveToNext()) {
+            i = Integer.parseInt(userCursor.getString(userCursor.getColumnIndex("amount")));
+        }
+        while (i>0) {
+            System.out.print("输出单词："+i+"--");
+            double d  = Math.random();
+            int wordnumber = (int)(d*400);
+            System.out.print(wordnumber+"--");
+            Cursor cursor = dbManager.selectword(wordnumber);
+
+            while (cursor.moveToNext()) {
+                System.out.println(cursor.getString(cursor.getColumnIndex("word")));
+                if (!cursor.getString(cursor.getColumnIndex("degree")).equals("0")){
+                    continue;
+                }
+            }
+
+            i--;
+        }
     }
 }

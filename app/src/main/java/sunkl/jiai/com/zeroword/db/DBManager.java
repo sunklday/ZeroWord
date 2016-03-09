@@ -48,7 +48,7 @@ public class DBManager extends SQLiteOpenHelper {
     private static final String SQL_DELETE_ENTRIES =
             "DROP TABLE IF EXISTS " + WORDTABLE.TABLE_NAME;
 
-    public static final int DATABASE_VERSION = 2;
+    public static final int DATABASE_VERSION = 1;
     public static final String DATABASE_NAME = "word.db";
 
     public DBManager(Context context) {
@@ -85,7 +85,7 @@ public class DBManager extends SQLiteOpenHelper {
         public static final String TABLE_NAME = "user";
         public static final String COLUMN_NAME_NAME = "name";
         public static final String COLUMN_NAME_TIME = "time";
-        public static final String COLUMN_NAME_WORDMARK = "mean";
+        public static final String COLUMN_NAME_WORDMARK = "wordmark";
         public static final String COLUMN_NAME_AMOUNT = "amount";
     }
     @Override

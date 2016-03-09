@@ -1,6 +1,7 @@
 package sunkl.jiai.com.zeroword.activity;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -30,32 +31,7 @@ public class ConfigActivity extends AppCompatActivity {
         btnTianJia.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                InputStream inputStream = getResources().openRawResource(R.raw.sijiword3);
-                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
-                DBManager dbManager = new DBManager(ConfigActivity.this);
-                String line;
-                int i = 0;
-                try {
-                    while (i < 500) {
-                        i++;
-                        line = bufferedReader.readLine();
-                        String[] str = line.split("\\*", 3);
-                        if (str.length < 2) {
-                            continue;
-                        }
-                        dbManager.insert(str[0], str[1], str[2], 0);
-                        for (int j = 0; j < str.length; j++) {
-                            System.out.println(str[j] + " " + j);
-                        }
-                    }
-                    if (i > 498) {
-                        Toast.makeText(getApplicationContext(), "添加成功",
-                                Toast.LENGTH_SHORT).show();
-                    }
-                } catch (IOException e) {
-
-                }
-
+                addData();
             }
         });
 
@@ -68,4 +44,38 @@ public class ConfigActivity extends AppCompatActivity {
         });
 
     }
+
+    private void addData(){
+        AddDataTask addDataTask = new AddDataTask();
+        addDataTask.execute();
+    }
+
+   class  AddDataTask extends AsyncTask<Void,Void,Void>{
+
+       @Override
+       protected Void doInBackground(Void... params) {
+           InputStream inputStream = getResources().openRawResource(R.raw.sijiword3);
+           BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+           DBManager dbManager = new DBManager(ConfigActivity.this);
+           String line;
+           int i = 0;
+           try {
+               while (i < 500) {
+                   i++;
+                   line = bufferedReader.readLine();
+                   String[] str = line.split("\\*", 3);
+                   if (str.length < 2) {
+                       continue;
+                   }
+                   dbManager.insert(str[0], str[1], str[2], 0);
+                   for (int j = 0; j < str.length; j++) {
+                       System.out.println(str[j] + " " + j);
+                   }
+               }
+           } catch (IOException e) {
+
+           }
+           return null;
+       }
+   }
 }
