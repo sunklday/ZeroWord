@@ -1,5 +1,6 @@
 package sunkl.jiai.com.zeroword.activity;
 
+import android.database.Cursor;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -10,44 +11,48 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import sunkl.jiai.com.zeroword.R;
+import sunkl.jiai.com.zeroword.db.DBManager;
 
 public class StudyActivity extends AppCompatActivity implements View.OnClickListener{
 
-    private ArrayList<String> listIntent;
     private ArrayList<HashMap<String,String>> wordArraylist;
     private TextView textViewWord;
-    private TextView textViewmean;
-    private TextView textViewexample;
+    private TextView textViewMean;
+    private TextView textViewExample;
     private int  i;
     private int amount;
     private Button buttonShowMore;
     private Button buttonNextWOrd;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_study);
         wordArraylist = new ArrayList<>();
         textViewWord = (TextView) findViewById(R.id.txv_word);
-        textViewmean = (TextView) findViewById(R.id.txv_mean);
-        textViewexample = (TextView) findViewById(R.id.txv_example);
+        textViewMean = (TextView) findViewById(R.id.txv_mean);
+        textViewExample = (TextView) findViewById(R.id.txv_example);
         buttonNextWOrd = (Button) findViewById(R.id.btn_nextword);
         buttonShowMore = (Button) findViewById(R.id.btn_showmore);
         buttonShowMore.setOnClickListener(this);
         buttonNextWOrd.setOnClickListener(this);
-
         initData();
     }
     private void initData(){
-        i = getWordMark();
+        i=0;
         amount = getAmount();
-        listIntent = getIntent().getStringArrayListExtra("data");
-        for(String s:listIntent){
+        ArrayList<String> listIntent = getIntent().getStringArrayListExtra("data");
+        String mark = getWordMark();
+        for(String s: listIntent){
             String[] word = s.split("\\*",3);
             HashMap<String, String> hashMap = new HashMap<>();
             hashMap.put("word",word[0]);
             hashMap.put("mean",word[1]);
             hashMap.put("example",word[2]);
             wordArraylist.add(hashMap);
+            if (hashMap.get("word").equals(mark)){
+                i=hashMap.size();
+            }
         }
         setDataTextView();
 
@@ -55,34 +60,42 @@ public class StudyActivity extends AppCompatActivity implements View.OnClickList
 
     private void setDataTextView(){
         textViewWord.setText(wordArraylist.get(i).get("word"));
-        textViewmean.setText(wordArraylist.get(i).get("mean"));
-        textViewexample.setText(wordArraylist.get(i).get("example"));
-        textViewmean.setVisibility(View.INVISIBLE);
-        textViewexample.setVisibility(View.INVISIBLE);
+        textViewMean.setText(wordArraylist.get(i).get("mean"));
+        textViewExample.setText(wordArraylist.get(i).get("example"));
+        textViewMean.setVisibility(View.INVISIBLE);
+        textViewExample.setVisibility(View.INVISIBLE);
     }
 
-    private int getWordMark(){
-        int i = 0;
-
-        return i;
+    private String getWordMark(){
+        String strMark = null;
+        DBManager dbManager = new DBManager(StudyActivity.this);
+        Cursor cursor = dbManager.userSelect();
+        while(cursor.moveToNext()){
+            strMark = cursor.getString(cursor.getColumnIndex("wordmark"));
+        }
+        return strMark;
     }
 
     private int getAmount(){
         int amount = 20;
+        DBManager dbManager = new DBManager(StudyActivity.this);
+        Cursor cursor = dbManager.userSelect();
+        while(cursor.moveToNext()){
+            amount = Integer.parseInt(cursor.getString(cursor.getColumnIndex("amount")));
+        }
         return amount;
     }
     private void showMore(){
-        if (textViewexample.getVisibility() == View.VISIBLE){
+        if (textViewExample.getVisibility() == View.VISIBLE){
             nextWord();
             return;
         }
-        if (textViewmean.getVisibility() == View.VISIBLE){
-            textViewexample.setVisibility(View.VISIBLE);
+        if (textViewMean.getVisibility() == View.VISIBLE){
+            textViewExample.setVisibility(View.VISIBLE);
             return;
         }
         if (textViewWord.getVisibility() == View.VISIBLE){
-            textViewmean.setVisibility(View.VISIBLE);
-            return;
+            textViewMean.setVisibility(View.VISIBLE);
         }
     }
     private void nextWord(){
@@ -104,5 +117,13 @@ public class StudyActivity extends AppCompatActivity implements View.OnClickList
                 showMore();
                 break;
         }
+    }
+    @Override
+    public void finish() {
+        String word = textViewWord.getText().toString();
+
+        DBManager dbManager = new DBManager(this);
+        dbManager.userUpdate(word);
+        super.finish();
     }
 }

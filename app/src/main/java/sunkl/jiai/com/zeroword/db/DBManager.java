@@ -220,7 +220,7 @@ public class DBManager extends SQLiteOpenHelper {
     public void userUpdate(String wordmark){
         String[] whereArgs = {"sun"};
         ContentValues cv = new ContentValues();
-        cv.put("mean",wordmark);
+        cv.put("wordmark",wordmark);
         SQLiteDatabase db = this.getWritableDatabase();
         db.update(USERTABLE.TABLE_NAME,cv,"name=?",whereArgs);
     }
