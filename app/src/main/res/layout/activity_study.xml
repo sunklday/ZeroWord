@@ -36,4 +36,22 @@
         android:text="nextword"
         android:id="@+id/btn_nextword"/>
 
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="simple"
+        android:id="@+id/btn_simple"
+        android:layout_above="@+id/btn_showmore"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="difficult"
+        android:id="@+id/btn_difficult"
+        android:layout_above="@+id/btn_nextword"
+        android:layout_centerHorizontal="true" />
+
 </RelativeLayout>

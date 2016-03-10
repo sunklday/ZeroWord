@@ -211,9 +211,16 @@ public class DBManager extends SQLiteOpenHelper {
         String[] whereArgs = {word};
         ContentValues cv = new ContentValues();
         cv.put("date",date);
-        cv.put("id",id);
+        cv.put("id", id);
         SQLiteDatabase db =this.getWritableDatabase();
-        db.update(WORDTABLE.TABLE_NAME,cv,"word=?",whereArgs);
+        db.update(WORDTABLE.TABLE_NAME, cv, "word=?", whereArgs);
+    }
+    public void userDegreeUpdata(String word,Integer degree){
+        String[] whereArgs = {word};
+        ContentValues cv = new ContentValues();
+        cv.put("degree", degree);
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.update(WORDTABLE.TABLE_NAME, cv, "word=?", whereArgs);
     }
 
     /**
@@ -263,8 +270,9 @@ public class DBManager extends SQLiteOpenHelper {
     public void userTimeUpdata(String time){
         String[] whereArgs = {"sun"};
         ContentValues cv = new ContentValues();
-        cv.put("time",time);
+        cv.put("time", time);
         SQLiteDatabase db = this.getWritableDatabase();
         db.update(USERTABLE.TABLE_NAME, cv, "name=?", whereArgs);
     }
+
 }

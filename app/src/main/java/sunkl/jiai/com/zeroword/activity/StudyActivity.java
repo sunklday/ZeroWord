@@ -28,6 +28,8 @@ public class StudyActivity extends AppCompatActivity implements View.OnClickList
     private int amount;
     private Button buttonShowMore;
     private Button buttonNextWOrd;
+    private Button buttonSimple;
+    private Button buttonDifficult;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,8 +41,12 @@ public class StudyActivity extends AppCompatActivity implements View.OnClickList
         textViewExample = (TextView) findViewById(R.id.txv_example);
         buttonNextWOrd = (Button) findViewById(R.id.btn_nextword);
         buttonShowMore = (Button) findViewById(R.id.btn_showmore);
+        buttonSimple = (Button) findViewById(R.id.btn_simple);
+        buttonDifficult = (Button) findViewById(R.id.btn_difficult);
         buttonShowMore.setOnClickListener(this);
         buttonNextWOrd.setOnClickListener(this);
+        buttonSimple.setOnClickListener(this);
+        buttonDifficult.setOnClickListener(this);
         initData();
     }
     private void initData(){
@@ -87,6 +93,10 @@ public class StudyActivity extends AppCompatActivity implements View.OnClickList
         textViewExample.setText(wordArraylist.get(i).get("example"));
         textViewMean.setVisibility(View.INVISIBLE);
         textViewExample.setVisibility(View.INVISIBLE);
+        buttonDifficult.setVisibility(View.INVISIBLE);
+        buttonSimple.setVisibility(View.INVISIBLE);
+        buttonShowMore.setVisibility(View.VISIBLE);
+        buttonNextWOrd.setVisibility(View.VISIBLE);
     }
 
     private String getWordMark(){
@@ -124,6 +134,11 @@ public class StudyActivity extends AppCompatActivity implements View.OnClickList
     private void nextWord(){
         if(i<amount-1){
             i++;
+            buttonSimple.setVisibility(View.VISIBLE);
+            buttonDifficult.setVisibility(View.VISIBLE);
+            buttonShowMore.setVisibility(View.INVISIBLE);
+            buttonNextWOrd.setVisibility(View.INVISIBLE);
+            return;
         }else if(i==amount-1){
             buttonNextWOrd.setText("学完啦");
             buttonShowMore.setVisibility(View.INVISIBLE);
@@ -133,8 +148,17 @@ public class StudyActivity extends AppCompatActivity implements View.OnClickList
             finish();
             return;
         }
-      setDataTextView();
+     // setDataTextView();
     }
+    private void  setWordDegree(Integer degree){
+        String word = textViewWord.getText().toString();
+
+        DBManager dbManager = new DBManager(this);
+        dbManager.userDegreeUpdata(word, degree);
+        setDataTextView();
+    }
+
+
     @Override
     public void onClick(View v) {
         int viewId = v.getId();
@@ -144,6 +168,12 @@ public class StudyActivity extends AppCompatActivity implements View.OnClickList
                 break;
             case R.id.btn_showmore:
                 showMore();
+                break;
+            case R.id.btn_simple:
+                setWordDegree(3);
+                break;
+            case R.id.btn_difficult:
+                setWordDegree(1);
                 break;
         }
     }
