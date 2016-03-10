@@ -17,6 +17,9 @@ import java.util.List;
 
 import sunkl.jiai.com.zeroword.R;
 import sunkl.jiai.com.zeroword.db.DBManager;
+import sunkl.jiai.com.zeroword.manager.GetWordManager;
+import sunkl.jiai.com.zeroword.manager.WordManager;
+import sunkl.jiai.com.zeroword.model.Word;
 
 /**
  * 进入学习单词前的显示列表
@@ -41,7 +44,15 @@ public class ShowWordActivity extends AppCompatActivity implements View.OnClickL
         initListView();
     }
     private void initListView(){
-        setData();
+        //setData();
+        WordManager wordManager= new WordManager(ShowWordActivity.this);
+        ArrayList<Word> arrayList = wordManager.getTodayWordList();
+        for (Word word:arrayList){
+            HashMap<String ,String> hashMap = new HashMap<>();
+            hashMap.put("word",word.getWord());
+            hashMap.put("mean",word.getMean());
+            list.add(hashMap);
+        }
         SimpleAdapter simpleAdapter = new SimpleAdapter(this,list,R.layout.show_word_listview,
                 //动态数组与ListItem对应的子项
                 new String[]{"word", "mean"},
@@ -51,7 +62,7 @@ public class ShowWordActivity extends AppCompatActivity implements View.OnClickL
         listViewShowWord.setAdapter(simpleAdapter);
 
     }
-    private void setData(){
+/*    private void setData(){
         DBManager db= new DBManager(ShowWordActivity.this);
         Cursor cursor = db.userSelect();
         while (cursor.moveToNext()){
@@ -75,7 +86,7 @@ public class ShowWordActivity extends AppCompatActivity implements View.OnClickL
             }
             i++;
         }
-    }
+    }*/
 
     @Override
     public void onClick(View v) {

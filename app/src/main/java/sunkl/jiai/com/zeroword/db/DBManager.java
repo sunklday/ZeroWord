@@ -29,7 +29,7 @@ public class DBManager extends SQLiteOpenHelper {
             "CREATE TABLE " + USERTABLE.TABLE_NAME + " (" +
                     USERTABLE._ID + " INTEGER PRIMARY KEY," +
                     USERTABLE.COLUMN_NAME_NAME + TEXT_TYPE + COMMA_SEP +
-                    USERTABLE.COLUMN_NAME_TIME + INTEGER_TYPE + COMMA_SEP +
+                    USERTABLE.COLUMN_NAME_TIME + TEXT_TYPE + COMMA_SEP +
                     USERTABLE.COLUMN_NAME_WORDMARK + TEXT_TYPE + COMMA_SEP +
                     USERTABLE.COLUMN_NAME_AMOUNT + INTEGER_TYPE +
                     " )";

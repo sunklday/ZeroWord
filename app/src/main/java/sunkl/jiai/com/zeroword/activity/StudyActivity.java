@@ -103,7 +103,7 @@ public class StudyActivity extends AppCompatActivity implements View.OnClickList
         }
     }
     private void nextWord(){
-        if(i<amount){
+        if(i<amount-1){
             i++;
         }else {
             finish();
