@@ -9,6 +9,7 @@ import android.provider.BaseColumns;
 
 /**
  * Created by admin on 16/2/17.
+ * 数据库管理
  */
 public class DBManager extends SQLiteOpenHelper {
 
@@ -28,8 +29,8 @@ public class DBManager extends SQLiteOpenHelper {
             "CREATE TABLE " + USERTABLE.TABLE_NAME + " (" +
                     USERTABLE._ID + " INTEGER PRIMARY KEY," +
                     USERTABLE.COLUMN_NAME_NAME + TEXT_TYPE + COMMA_SEP +
-                    USERTABLE.COLUMN_NAME_TIME + INTEGER_TYPE +COMMA_SEP+
-                    USERTABLE.COLUMN_NAME_WORDMARK + TEXT_TYPE +COMMA_SEP+
+                    USERTABLE.COLUMN_NAME_TIME + INTEGER_TYPE + COMMA_SEP +
+                    USERTABLE.COLUMN_NAME_WORDMARK + TEXT_TYPE + COMMA_SEP +
                     USERTABLE.COLUMN_NAME_AMOUNT + INTEGER_TYPE +
                     " )";
     /**
@@ -42,7 +43,8 @@ public class DBManager extends SQLiteOpenHelper {
                     WORDTABLE.COLUMN_NAME_WORD + TEXT_TYPE + COMMA_SEP +
                     WORDTABLE.COLUMN_NAME_MEAN + TEXT_TYPE + COMMA_SEP +
                     WORDTABLE.COLUMN_NAME_EXAMPLE + TEXT_TYPE + COMMA_SEP +
-                    WORDTABLE.COLUMN_NAME_DEGREE + INTEGER_TYPE +
+                    WORDTABLE.COLUMN_NAME_DEGREE + INTEGER_TYPE + COMMA_SEP +
+                    WORDTABLE.COLUMN_NAME_DATE + TEXT_TYPE +
                     " )";
 
     private static final String SQL_DELETE_ENTRIES =
@@ -62,7 +64,6 @@ public class DBManager extends SQLiteOpenHelper {
      * mean 释义
      * example 例句
      * degree 单词的程度 用来标记单词难度或者复习程度
-     *
      */
     public static abstract class WORDTABLE implements BaseColumns {
         public static final String TABLE_NAME = "word";
@@ -71,6 +72,7 @@ public class DBManager extends SQLiteOpenHelper {
         public static final String COLUMN_NAME_MEAN = "mean";
         public static final String COLUMN_NAME_EXAMPLE = "example";
         public static final String COLUMN_NAME_DEGREE = "degree";
+        public static final String COLUMN_NAME_DATE = "date";
 
     }
 
@@ -88,6 +90,7 @@ public class DBManager extends SQLiteOpenHelper {
         public static final String COLUMN_NAME_WORDMARK = "wordmark";
         public static final String COLUMN_NAME_AMOUNT = "amount";
     }
+
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(SQL_CREATE_ENTRIES);
@@ -98,7 +101,7 @@ public class DBManager extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         // This database is only a cache for online data, so its upgrade policy is
         // to simply to discard the data and start over
-        switch (oldVersion){
+        switch (oldVersion) {
             case 1:
                 onCreate(db);
             case 2:
@@ -168,10 +171,10 @@ public class DBManager extends SQLiteOpenHelper {
         return cursor;
     }
 
-    public Cursor selectword(int id){
+    public Cursor selectword(int id) {
         SQLiteDatabase db = this.getReadableDatabase();
         String[] selectionArgs = {String.valueOf(id)};
-        Cursor cursor = db.query(WORDTABLE.TABLE_NAME,null,"_id=?",selectionArgs,null,null," _id desc");
+        Cursor cursor = db.query(WORDTABLE.TABLE_NAME, null, "_id=?", selectionArgs, null, null, " _id desc");
         return cursor;
     }
 
@@ -189,16 +192,27 @@ public class DBManager extends SQLiteOpenHelper {
         db.delete(WORDTABLE.TABLE_NAME, where, whereValue);
     }
 
-    public void update(String word,int degree){
+    public void update(String word, int degree) {
         String[] whereArgs = {word};
         ContentValues cv = new ContentValues();
-        cv.put("degree",String.valueOf(degree));
+        cv.put("degree", String.valueOf(degree));
         SQLiteDatabase db = this.getWritableDatabase();
         db.update(WORDTABLE.TABLE_NAME, cv, "word=?", whereArgs);
+
+    }
+
+    public void updata(String word, String date, int id) {
+        String[] whereArgs = {word};
+        ContentValues cv = new ContentValues();
+        cv.put("date",date);
+        cv.put("id",String.valueOf(id));
+        SQLiteDatabase db =this.getWritableDatabase();
+        db.update(WORDTABLE.TABLE_NAME,cv,"word=?",whereArgs);
     }
 
     /**
      * user表的操作
+     *
      * @param name
      * @param time
      * @param wordmark
@@ -217,24 +231,27 @@ public class DBManager extends SQLiteOpenHelper {
                 cv);
         return newRowId;
     }
-    public void userUpdate(String wordmark){
+
+    public void userUpdate(String wordmark) {
         String[] whereArgs = {"sun"};
         ContentValues cv = new ContentValues();
-        cv.put("wordmark",wordmark);
+        cv.put("wordmark", wordmark);
         SQLiteDatabase db = this.getWritableDatabase();
-        db.update(USERTABLE.TABLE_NAME,cv,"name=?",whereArgs);
+        db.update(USERTABLE.TABLE_NAME, cv, "name=?", whereArgs);
     }
+
     public Cursor userSelect() {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.query(USERTABLE.TABLE_NAME, null, null, null, null, null, " _id desc");
 
         return cursor;
     }
-    public void userAmountUpdate(String number){
+
+    public void userAmountUpdate(String number) {
         String[] whereArgs = {"sun"};
         ContentValues cv = new ContentValues();
-        cv.put("amount",number);
+        cv.put("amount", number);
         SQLiteDatabase db = this.getWritableDatabase();
-        db.update(USERTABLE.TABLE_NAME,cv,"name=?",whereArgs);
+        db.update(USERTABLE.TABLE_NAME, cv, "name=?", whereArgs);
     }
 }

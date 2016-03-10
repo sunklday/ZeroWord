@@ -9,6 +9,7 @@ import sunkl.jiai.com.zeroword.view.StartFragment;
 
 /**
  * Created by admin on 16/3/4.
+ * 主界面的adapter
  */
 public class SectionsPagerAdapter extends FragmentPagerAdapter {
     public SectionsPagerAdapter(FragmentManager fm) {

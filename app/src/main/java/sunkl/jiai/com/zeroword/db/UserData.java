@@ -5,6 +5,7 @@ import android.app.Application;
 /**
  * 存放全局变量的，修改了AndroidMainifest.xml
  * Created by admin on 16/3/4.
+ * 没用的类
  */
 public class UserData extends Application {
     @Override

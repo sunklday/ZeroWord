@@ -16,6 +16,9 @@ import java.io.InputStreamReader;
 import sunkl.jiai.com.zeroword.R;
 import sunkl.jiai.com.zeroword.db.DBManager;
 
+/**
+ * 设置界面
+ */
 public class ConfigActivity extends AppCompatActivity {
     private Button btnTianJia;
     private Button btnShezhi;
@@ -34,7 +37,7 @@ public class ConfigActivity extends AppCompatActivity {
                 addData();
             }
         });
-
+        //启动设置每日单词的activity
         btnShezhi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -44,7 +47,7 @@ public class ConfigActivity extends AppCompatActivity {
         });
 
     }
-
+    //添加数据库
     private void addData(){
         AddDataTask addDataTask = new AddDataTask();
         addDataTask.execute();

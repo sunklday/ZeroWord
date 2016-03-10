@@ -18,6 +18,7 @@ import sunkl.jiai.com.zeroword.db.DBManager;
 
 /**
  * Created by admin on 16/2/18.
+ * 主界面中开始学习按钮的正中间的那个fragment
  */
 public class StartFragment extends Fragment {
     private Button button;

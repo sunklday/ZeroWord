@@ -13,6 +13,9 @@ import java.util.HashMap;
 import sunkl.jiai.com.zeroword.R;
 import sunkl.jiai.com.zeroword.db.DBManager;
 
+/**
+ * 开始学习单词的界面
+ */
 public class StudyActivity extends AppCompatActivity implements View.OnClickListener{
 
     private ArrayList<HashMap<String,String>> wordArraylist;
@@ -48,11 +51,12 @@ public class StudyActivity extends AppCompatActivity implements View.OnClickList
             HashMap<String, String> hashMap = new HashMap<>();
             hashMap.put("word",word[0]);
             hashMap.put("mean",word[1]);
-            hashMap.put("example",word[2]);
-            wordArraylist.add(hashMap);
+            hashMap.put("example", word[2]);
             if (hashMap.get("word").equals(mark)){
-                i=hashMap.size();
+                i=wordArraylist.size();
+                System.out.println(i+"-"+mark);
             }
+            wordArraylist.add(hashMap);
         }
         setDataTextView();
 

@@ -5,18 +5,24 @@ import android.database.Cursor;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Adapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
 import sunkl.jiai.com.zeroword.R;
 import sunkl.jiai.com.zeroword.db.DBManager;
 
+/**
+ * 进入学习单词前的显示列表
+ * 列表将随机选出单词。
+ * 并且记录word数据库添加date
+ */
 public class ShowWordActivity extends AppCompatActivity implements View.OnClickListener {
     private ListView listViewShowWord;
     private Button btnStartStudy;
@@ -32,9 +38,9 @@ public class ShowWordActivity extends AppCompatActivity implements View.OnClickL
         btnStartStudy = (Button) findViewById(R.id.btn_startStudy);
         btnStartStudy.setOnClickListener(this);
         listViewShowWord = (ListView) findViewById(R.id.lsv_showWord);
-        init();
+        initListView();
     }
-    private void init(){
+    private void initListView(){
         setData();
         SimpleAdapter simpleAdapter = new SimpleAdapter(this,list,R.layout.show_word_listview,
                 //动态数组与ListItem对应的子项
@@ -62,9 +68,10 @@ public class ShowWordActivity extends AppCompatActivity implements View.OnClickL
                 String example = c.getString(c.getColumnIndex("example"));
                 HashMap<String,String> hashmap = new HashMap<>();
                 hashmap.put("word",word);
-                hashmap.put("mean",mean);
+                hashmap.put("mean", mean);
                 list.add(hashmap);
-                listIntent.add(word+"*"+mean+"*"+example);
+                listIntent.add(word + "*" + mean + "*" + example);
+                updateword(word, i);
             }
             i++;
         }
@@ -75,5 +82,13 @@ public class ShowWordActivity extends AppCompatActivity implements View.OnClickL
         Intent intent = new Intent(this,StudyActivity.class);
         intent.putStringArrayListExtra("data",listIntent);
         startActivity(intent);
+    }
+
+    private void updateword(String word,int i){
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy年MM月dd日");
+        Date curDate = new Date(System.currentTimeMillis());//获取当前时间
+        String str = formatter.format(curDate);
+        DBManager dbManager = new DBManager(ShowWordActivity.this);
+        dbManager.updata(word,str,i);
     }
 }

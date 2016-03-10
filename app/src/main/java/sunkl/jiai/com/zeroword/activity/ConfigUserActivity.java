@@ -11,6 +11,9 @@ import java.security.PrivateKey;
 import sunkl.jiai.com.zeroword.R;
 import sunkl.jiai.com.zeroword.db.DBManager;
 
+/**
+ * 设置每日的单词数
+ */
 public class ConfigUserActivity extends AppCompatActivity {
 
     private Switch aSwitch;
@@ -31,7 +34,7 @@ public class ConfigUserActivity extends AppCompatActivity {
         }
 
     }
-
+    //finish activity的时候保存数据
     @Override
     public void finish() {
         String number = editText.getText().toString();
