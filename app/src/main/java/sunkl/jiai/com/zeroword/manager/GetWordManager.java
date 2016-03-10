@@ -29,21 +29,21 @@ public class GetWordManager {
             boolean hasRead =false;
             //400为单词数，这边随机找
             int n = (int)(d*400);
-            Cursor c=db.selectword(n);
-            while (c.moveToNext()){
-                String word = c.getString(c.getColumnIndex("word"));
-                String mean = c.getString(c.getColumnIndex("mean"));
-                String example = c.getString(c.getColumnIndex("example"));
-                String _id = c.getString(c.getColumnIndex("_id"));
+            Cursor cursor=db.selectword(n);
+            while (cursor.moveToNext()){
+                String word = cursor.getString(cursor.getColumnIndex("word"));
+                String mean = cursor.getString(cursor.getColumnIndex("mean"));
+                String example = cursor.getString(cursor.getColumnIndex("example"));
+                String _id = cursor.getString(cursor.getColumnIndex("_id"));
                 String id = String.valueOf(i);
-                String date = c.getString(c.getColumnIndex("date"));
-                String degree = c.getString(c.getColumnIndex("degree"));
-                if(!degree.equals("0")){
+                String date = cursor.getString(cursor.getColumnIndex("date"));
+                String degree = cursor.getString(cursor.getColumnIndex("degree"));
+               if(date!=null){
                     hasRead = true;
                     break;
                 }
                 Word words = new Word(id,_id,word,mean,example,degree,date);
-              //  updateword(word, i);
+                updatewordAndUser(word, i);
                 arrayListWords.add(words);
             }
             if (hasRead){
@@ -59,11 +59,31 @@ public class GetWordManager {
 
         return null;
     }
-    private void updateword(String word,int i){
+    public ArrayList<Word> getLastWord(String lastDate){
+        DBManager dbManager = new DBManager(this.context);
+        ArrayList<Word> arrayListLastWords = new ArrayList<>();
+        Cursor cursor = dbManager.selectWordByDate(lastDate);
+        while (cursor.moveToNext()){
+            String word = cursor.getString(cursor.getColumnIndex("word"));
+            String mean = cursor.getString(cursor.getColumnIndex("mean"));
+            String example = cursor.getString(cursor.getColumnIndex("example"));
+            String _id = cursor.getString(cursor.getColumnIndex("_id"));
+            String id = cursor.getString(cursor.getColumnIndex("id"));
+            String date = cursor.getString(cursor.getColumnIndex("date"));
+            String degree = cursor.getString(cursor.getColumnIndex("degree"));
+            Word words = new Word(id,_id,word,mean,example,degree,date);
+            arrayListLastWords.add(words);
+        }
+        return arrayListLastWords;
+    }
+
+    private void updatewordAndUser(String word,int i){
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy年MM月dd日");
         Date curDate = new Date(System.currentTimeMillis());//获取当前时间
         String str = formatter.format(curDate);
         DBManager dbManager = new DBManager(this.context);
         dbManager.updata(word,str,i);
+        dbManager.userTimeUpdata(str);
+
     }
 }

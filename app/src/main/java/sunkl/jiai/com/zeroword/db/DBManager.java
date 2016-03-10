@@ -178,6 +178,12 @@ public class DBManager extends SQLiteOpenHelper {
         return cursor;
     }
 
+    public Cursor selectWordByDate(String date){
+        SQLiteDatabase db = this.getReadableDatabase();
+        String[] selectionArgs = {String.valueOf(date)};
+        Cursor cursor = db.query(WORDTABLE.TABLE_NAME, null, "date=?", selectionArgs, null, null, " id desc");
+        return cursor;
+    }
     public void delete(int id) {
         SQLiteDatabase db = this.getWritableDatabase();
         String where = WORDTABLE._ID + "=?";
@@ -251,6 +257,13 @@ public class DBManager extends SQLiteOpenHelper {
         String[] whereArgs = {"sun"};
         ContentValues cv = new ContentValues();
         cv.put("amount", number);
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.update(USERTABLE.TABLE_NAME, cv, "name=?", whereArgs);
+    }
+    public void userTimeUpdata(String time){
+        String[] whereArgs = {"sun"};
+        ContentValues cv = new ContentValues();
+        cv.put("time",time);
         SQLiteDatabase db = this.getWritableDatabase();
         db.update(USERTABLE.TABLE_NAME, cv, "name=?", whereArgs);
     }

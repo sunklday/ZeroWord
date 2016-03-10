@@ -62,31 +62,6 @@ public class ShowWordActivity extends AppCompatActivity implements View.OnClickL
         listViewShowWord.setAdapter(simpleAdapter);
 
     }
-/*    private void setData(){
-        DBManager db= new DBManager(ShowWordActivity.this);
-        Cursor cursor = db.userSelect();
-        while (cursor.moveToNext()){
-            wordNumber = Integer.valueOf(cursor.getString(cursor.getColumnIndex("amount")));
-        }
-        int i = 0;
-        while (i<wordNumber) {
-            double d  = Math.random();
-            int id = (int)(d*400);
-            Cursor c=db.selectword(id);
-            while (c.moveToNext()){
-                String word = c.getString(c.getColumnIndex("word"));
-                String mean = c.getString(c.getColumnIndex("mean"));
-                String example = c.getString(c.getColumnIndex("example"));
-                HashMap<String,String> hashmap = new HashMap<>();
-                hashmap.put("word",word);
-                hashmap.put("mean", mean);
-                list.add(hashmap);
-                listIntent.add(word + "*" + mean + "*" + example);
-                updateword(word, i);
-            }
-            i++;
-        }
-    }*/
 
     @Override
     public void onClick(View v) {
@@ -95,11 +70,4 @@ public class ShowWordActivity extends AppCompatActivity implements View.OnClickL
         startActivity(intent);
     }
 
-    private void updateword(String word,int i){
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy年MM月dd日");
-        Date curDate = new Date(System.currentTimeMillis());//获取当前时间
-        String str = formatter.format(curDate);
-        DBManager dbManager = new DBManager(ShowWordActivity.this);
-        dbManager.updata(word,str,i);
-    }
 }

@@ -12,6 +12,8 @@ import java.util.HashMap;
 
 import sunkl.jiai.com.zeroword.R;
 import sunkl.jiai.com.zeroword.db.DBManager;
+import sunkl.jiai.com.zeroword.manager.WordManager;
+import sunkl.jiai.com.zeroword.model.Word;
 
 /**
  * 开始学习单词的界面
@@ -43,7 +45,22 @@ public class StudyActivity extends AppCompatActivity implements View.OnClickList
     }
     private void initData(){
         i=0;
-        amount = getAmount();
+        amount=getAmount();
+        String mark = getWordMark();
+        WordManager wordManager= new WordManager(StudyActivity.this);
+        ArrayList<Word> arrayList = wordManager.getTodayWordList();
+        for (Word word:arrayList){
+            HashMap<String ,String> hashMap = new HashMap<>();
+            hashMap.put("word",word.getWord());
+            hashMap.put("mean",word.getMean());
+            hashMap.put("example",word.getExample());
+            if (hashMap.get("word").equals(mark)) {
+                i = wordArraylist.size();
+                System.out.println(i + "-" + mark);
+            }
+            wordArraylist.add(hashMap);
+        }
+       /* amount = getAmount();
         ArrayList<String> listIntent = getIntent().getStringArrayListExtra("data");
         String mark = getWordMark();
         for(String s: listIntent){
@@ -57,7 +74,8 @@ public class StudyActivity extends AppCompatActivity implements View.OnClickList
                 System.out.println(i+"-"+mark);
             }
             wordArraylist.add(hashMap);
-        }
+        }*/
+
         setDataTextView();
 
     }
@@ -105,8 +123,14 @@ public class StudyActivity extends AppCompatActivity implements View.OnClickList
     private void nextWord(){
         if(i<amount-1){
             i++;
+        }else if(i==amount-1){
+            buttonNextWOrd.setText("学完啦");
+            buttonShowMore.setVisibility(View.INVISIBLE);
+            i++;
+            return;
         }else {
             finish();
+            return;
         }
       setDataTextView();
     }
