@@ -48,6 +48,7 @@ public class ShowWordActivity extends AppCompatActivity implements View.OnClickL
         WordManager wordManager= new WordManager(ShowWordActivity.this);
         ArrayList<Word> arrayList = wordManager.getTodayWordList();
         for (Word word:arrayList){
+            System.out.println(word.toString());
             HashMap<String ,String> hashMap = new HashMap<>();
             hashMap.put("word",word.getWord());
             hashMap.put("mean",word.getMean());

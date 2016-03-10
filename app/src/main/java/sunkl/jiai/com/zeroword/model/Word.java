@@ -4,7 +4,7 @@ package sunkl.jiai.com.zeroword.model;
  * Created by admin on 2016/3/10.
  */
 public class Word {
-    private String id;
+    private Integer id;
     private String _id;
     private String word;
     private String mean;
@@ -12,7 +12,7 @@ public class Word {
     private String degree;
     private String date;
 
-    public Word(String id, String _id, String word, String mean, String example, String degree, String date) {
+    public Word(Integer id, String _id, String word, String mean, String example, String degree, String date) {
         this.id = id;
         this._id = _id;
         this.word = word;
@@ -22,11 +22,11 @@ public class Word {
         this.date = date;
     }
 
-    public String getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

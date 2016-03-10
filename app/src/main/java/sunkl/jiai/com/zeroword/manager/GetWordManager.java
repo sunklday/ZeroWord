@@ -35,7 +35,7 @@ public class GetWordManager {
                 String mean = cursor.getString(cursor.getColumnIndex("mean"));
                 String example = cursor.getString(cursor.getColumnIndex("example"));
                 String _id = cursor.getString(cursor.getColumnIndex("_id"));
-                String id = String.valueOf(i);
+                Integer id = i;
                 String date = cursor.getString(cursor.getColumnIndex("date"));
                 String degree = cursor.getString(cursor.getColumnIndex("degree"));
                if(date!=null){
@@ -68,7 +68,7 @@ public class GetWordManager {
             String mean = cursor.getString(cursor.getColumnIndex("mean"));
             String example = cursor.getString(cursor.getColumnIndex("example"));
             String _id = cursor.getString(cursor.getColumnIndex("_id"));
-            String id = cursor.getString(cursor.getColumnIndex("id"));
+            Integer id = Integer.valueOf(cursor.getString(cursor.getColumnIndex("id")));
             String date = cursor.getString(cursor.getColumnIndex("date"));
             String degree = cursor.getString(cursor.getColumnIndex("degree"));
             Word words = new Word(id,_id,word,mean,example,degree,date);

@@ -39,7 +39,7 @@ public class DBManager extends SQLiteOpenHelper {
     private static final String SQL_CREATE_ENTRIES =
             "CREATE TABLE " + WORDTABLE.TABLE_NAME + " (" +
                     WORDTABLE._ID + " INTEGER PRIMARY KEY," +
-                    WORDTABLE.COLUMN_NAME_ENTRY_ID + TEXT_TYPE + COMMA_SEP +
+                    WORDTABLE.COLUMN_NAME_ENTRY_ID + INTEGER_TYPE + COMMA_SEP +
                     WORDTABLE.COLUMN_NAME_WORD + TEXT_TYPE + COMMA_SEP +
                     WORDTABLE.COLUMN_NAME_MEAN + TEXT_TYPE + COMMA_SEP +
                     WORDTABLE.COLUMN_NAME_EXAMPLE + TEXT_TYPE + COMMA_SEP +
@@ -211,7 +211,7 @@ public class DBManager extends SQLiteOpenHelper {
         String[] whereArgs = {word};
         ContentValues cv = new ContentValues();
         cv.put("date",date);
-        cv.put("id",String.valueOf(id));
+        cv.put("id",id);
         SQLiteDatabase db =this.getWritableDatabase();
         db.update(WORDTABLE.TABLE_NAME,cv,"word=?",whereArgs);
     }

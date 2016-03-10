@@ -27,7 +27,7 @@ public class WordManager {
         int amout =user.getAmount();
         String time = user.getTime();
         String lastDate = DataManager.getDate();
-        if (time.equals(lastDate))
+        if (time!=null&&time.equals(lastDate))
         {
             return getWordManager.getLastWord(lastDate);
         }

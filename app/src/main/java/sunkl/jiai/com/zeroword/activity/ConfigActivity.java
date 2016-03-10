@@ -30,7 +30,7 @@ public class ConfigActivity extends AppCompatActivity {
         btnTianJia = (Button) findViewById(R.id.btn_adddb);
         btnShezhi = (Button) findViewById(R.id.btn_shezhi);
 
-        btnTianJia.setVisibility(View.INVISIBLE);
+        //btnTianJia.setVisibility(View.INVISIBLE);
         btnTianJia.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
