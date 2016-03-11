@@ -25,7 +25,8 @@
         <activity android:name=".activity.ConfigActivity" />
         <activity android:name=".activity.ConfigUserActivity" />
         <activity android:name=".activity.ShowWordActivity" />
-        <activity android:name=".activity.StudyActivity"></activity>
+        <activity android:name=".activity.StudyActivity" />
+        <activity android:name=".activity.DateWordActivity"></activity>
     </application>
 
 </manifest>

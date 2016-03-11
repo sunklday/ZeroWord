@@ -81,7 +81,7 @@ public class MainActivity extends AppCompatActivity implements ItemFragment.OnLi
 
     @Override
     public void onListFragmentInteraction(DummyContent.DummyItem item) {
-        System.out.println("callback");
+        System.out.println("callback"+item.toString());
     }
 
 }

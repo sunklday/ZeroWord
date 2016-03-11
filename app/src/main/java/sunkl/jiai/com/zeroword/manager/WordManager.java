@@ -31,8 +31,10 @@ public class WordManager {
         {
             return getWordManager.getLastWord(lastDate);
         }
-        else
+        else {
+            DBManager dbManager = new DBManager(this.context);
+            dbManager.dateInsert(lastDate);
             return getWordManager.getTodayWord(amout);
-
+        }
     }
 }

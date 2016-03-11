@@ -38,7 +38,7 @@ public class GetWordManager {
                 Integer id = i;
                 String date = cursor.getString(cursor.getColumnIndex("date"));
                 String degree = cursor.getString(cursor.getColumnIndex("degree"));
-               if(date!=null){
+               if(!degree.equals("0")){
                     hasRead = true;
                     break;
                 }
@@ -84,6 +84,5 @@ public class GetWordManager {
         DBManager dbManager = new DBManager(this.context);
         dbManager.updata(word,str,i);
         dbManager.userTimeUpdata(str);
-
     }
 }

@@ -5,6 +5,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import sunkl.jiai.com.zeroword.view.ItemFragment;
+import sunkl.jiai.com.zeroword.view.MyFragment;
 import sunkl.jiai.com.zeroword.view.StartFragment;
 
 /**
@@ -23,11 +24,11 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
         switch (position){
             case 0:
-                return  ItemFragment.newInstance(position);
+                return   MyFragment.newInstance(position);
             case 1:
                 return  StartFragment.newInstance(position);
             case 2:
-                return  ItemFragment.newInstance(position+1);
+                return  ItemFragment.newInstance(position);
         }
         return null;
 

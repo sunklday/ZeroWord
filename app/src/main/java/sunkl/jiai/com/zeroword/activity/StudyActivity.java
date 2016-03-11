@@ -67,22 +67,6 @@ public class StudyActivity extends AppCompatActivity implements View.OnClickList
             }
             wordArraylist.add(hashMap);
         }
-       /* amount = getAmount();
-        ArrayList<String> listIntent = getIntent().getStringArrayListExtra("data");
-        String mark = getWordMark();
-        for(String s: listIntent){
-            String[] word = s.split("\\*",3);
-            HashMap<String, String> hashMap = new HashMap<>();
-            hashMap.put("word",word[0]);
-            hashMap.put("mean",word[1]);
-            hashMap.put("example", word[2]);
-            if (hashMap.get("word").equals(mark)){
-                i=wordArraylist.size();
-                System.out.println(i+"-"+mark);
-            }
-            wordArraylist.add(hashMap);
-        }*/
-
         setDataTextView();
 
     }

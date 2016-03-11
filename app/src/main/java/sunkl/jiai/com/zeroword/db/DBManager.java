@@ -47,6 +47,16 @@ public class DBManager extends SQLiteOpenHelper {
                     WORDTABLE.COLUMN_NAME_DATE + TEXT_TYPE +
                     " )";
 
+    /**
+     * 建立date表sql语句
+     */
+    private static final String SQL_CREATE_DATE =
+            "CREATE TABLE " + DATETABLE.TABLE_NAME + " (" +
+                    DATETABLE._ID + " INTEGER PRIMARY KEY," +
+                    DATETABLE.COLUMN_NAME_NAME + TEXT_TYPE + COMMA_SEP +
+                    DATETABLE.COLUMN_NAME_DATE + TEXT_TYPE +
+                    " )";
+
     private static final String SQL_DELETE_ENTRIES =
             "DROP TABLE IF EXISTS " + WORDTABLE.TABLE_NAME;
 
@@ -90,11 +100,23 @@ public class DBManager extends SQLiteOpenHelper {
         public static final String COLUMN_NAME_WORDMARK = "wordmark";
         public static final String COLUMN_NAME_AMOUNT = "amount";
     }
+    /**
+     * 定义date表结构
+     * user 用户名字
+     * date 记录日期
+     */
+    public static abstract class DATETABLE implements BaseColumns {
+        public static final String TABLE_NAME = "date";
+        public static final String COLUMN_NAME_NAME = "name";
+        public static final String COLUMN_NAME_DATE = "date";
+
+    }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(SQL_CREATE_ENTRIES);
         db.execSQL(SQL_CREATE_USER);
+        db.execSQL(SQL_CREATE_DATE);
     }
 
     @Override
@@ -274,5 +296,26 @@ public class DBManager extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         db.update(USERTABLE.TABLE_NAME, cv, "name=?", whereArgs);
     }
+/**
+ * date表的操作
+ */
+    public Cursor dateSelect(){
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.query(DATETABLE.TABLE_NAME, null, null, null, null, null, null);
 
+        return cursor;
+    }
+
+    public long dateInsert(String date){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put(DATETABLE.COLUMN_NAME_NAME, "sun");
+        cv.put(DATETABLE.COLUMN_NAME_DATE, date);
+        long newRowId;
+        newRowId = db.insert(
+                DATETABLE.TABLE_NAME,
+                null,
+                cv);
+        return newRowId;
+    }
 }
