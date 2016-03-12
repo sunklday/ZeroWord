@@ -77,6 +77,8 @@ public class GetWordManager {
         return arrayListLastWords;
     }
 
+
+
     private void updatewordAndUser(String word,int i){
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy年MM月dd日");
         Date curDate = new Date(System.currentTimeMillis());//获取当前时间
@@ -85,4 +87,6 @@ public class GetWordManager {
         dbManager.updata(word,str,i);
         dbManager.userTimeUpdata(str);
     }
+
+
 }

@@ -203,7 +203,7 @@ public class DBManager extends SQLiteOpenHelper {
     public Cursor selectWordByDate(String date){
         SQLiteDatabase db = this.getReadableDatabase();
         String[] selectionArgs = {String.valueOf(date)};
-        Cursor cursor = db.query(WORDTABLE.TABLE_NAME, null, "date=?", selectionArgs, null, null, " id desc");
+        Cursor cursor = db.query(WORDTABLE.TABLE_NAME, null, "date=?", selectionArgs, null, null, " id ");
         return cursor;
     }
     public void delete(int id) {

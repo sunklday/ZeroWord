@@ -29,7 +29,7 @@ public class MyAdapter extends  ArrayAdapter<String>{
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        View view;
+        final View view;
         if (convertView==null){
             view = LayoutInflater.from(getContext()).inflate(R.layout.date_word_listview,null);
         } else {
@@ -37,7 +37,15 @@ public class MyAdapter extends  ArrayAdapter<String>{
         }
         TextView textView = (TextView) view.findViewById(R.id.textview_dateword);
         textView.setText(getItem(position));
-
+        final String date = (String) textView.getText();
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(),DateWordActivity.class);
+                intent.putExtra("date",date);
+                getContext().startActivity(intent);
+            }
+        });
         return view;
     }
 }

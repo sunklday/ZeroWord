@@ -52,14 +52,15 @@ public class ShowWordActivity extends AppCompatActivity implements View.OnClickL
             HashMap<String ,String> hashMap = new HashMap<>();
             hashMap.put("word",word.getWord());
             hashMap.put("mean",word.getMean());
+            hashMap.put("id", String.valueOf(word.getId()+1));
             list.add(hashMap);
         }
         SimpleAdapter simpleAdapter = new SimpleAdapter(this,list,R.layout.show_word_listview,
                 //动态数组与ListItem对应的子项
-                new String[]{"word", "mean"},
+                new String[]{"id","word", "mean"},
 
                 //ListItem的XML文件里面的两个TextView ID
-                new int[]{R.id.textview_danci, R.id.textview_shiyi});
+                new int[]{R.id.textview_id,R.id.textview_danci, R.id.textview_shiyi});
         listViewShowWord.setAdapter(simpleAdapter);
 
     }

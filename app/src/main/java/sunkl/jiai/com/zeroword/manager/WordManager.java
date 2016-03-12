@@ -1,6 +1,7 @@
 package sunkl.jiai.com.zeroword.manager;
 
 import android.content.Context;
+import android.database.Cursor;
 
 import java.lang.annotation.ElementType;
 import java.text.SimpleDateFormat;
@@ -9,6 +10,7 @@ import java.util.Date;
 
 import sunkl.jiai.com.zeroword.db.DBManager;
 import sunkl.jiai.com.zeroword.model.User;
+import sunkl.jiai.com.zeroword.model.Word;
 
 /**
  * Created by admin on 2016/3/10.
@@ -22,7 +24,7 @@ public class WordManager {
         this.usermanager = new Usermanager(context);
         this.getWordManager = new GetWordManager(context);
     }
-    public ArrayList getTodayWordList(){
+    public ArrayList<Word> getTodayWordList(){
         User user = usermanager.getuser();
         int amout =user.getAmount();
         String time = user.getTime();
@@ -37,4 +39,8 @@ public class WordManager {
             return getWordManager.getTodayWord(amout);
         }
     }
+    public ArrayList getDateWordList(String   date){
+            return getWordManager.getLastWord(date);
+    }
+
 }
