@@ -56,14 +56,14 @@ public class StudyActivity extends AppCompatActivity implements View.OnClickList
         WordManager wordManager= new WordManager(StudyActivity.this);
         ArrayList<Word> arrayList = wordManager.getTodayWordList();
         for (Word word:arrayList){
-            System.out.println(word.toString());
+            //System.out.println(word.toString());
             HashMap<String ,String> hashMap = new HashMap<>();
             hashMap.put("word",word.getWord());
             hashMap.put("mean",word.getMean());
             hashMap.put("example",word.getExample());
             if (hashMap.get("word").equals(mark)) {
                 i = wordArraylist.size();
-                System.out.println(i + "-" + mark);
+                //System.out.println(i + "-" + mark);
             }
             wordArraylist.add(hashMap);
         }

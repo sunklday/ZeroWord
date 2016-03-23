@@ -5,6 +5,7 @@ import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.WindowManager;
+import android.widget.ImageView;
 
 import sunkl.jiai.com.zeroword.R;
 
@@ -12,10 +13,13 @@ import sunkl.jiai.com.zeroword.R;
  * 启动动画界面
  */
 public class StartAnimationActivity extends AppCompatActivity {
-    private final int SPLASH_DISPLAY_LENGHT = 1000; // 延迟六秒    @Override
+    private final int SPLASH_DISPLAY_LENGHT = 3000;// 延迟六秒    @Override
+    private ImageView imageView;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start_animation);
+        imageView = (ImageView) findViewById(R.id.imageview);
+
         getWindow().setFlags(WindowManager.LayoutParams.TYPE_STATUS_BAR, WindowManager.LayoutParams.TYPE_STATUS_BAR); //全屏
         new Handler().postDelayed(new Runnable() {
             public void run() {
